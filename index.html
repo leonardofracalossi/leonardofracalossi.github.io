@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leonardo Fracalossi — Analista & Dev de Sistemas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       hsl(240, 6%, 4%);
+      --card:     hsl(240, 5%, 7%);
+      --sec:      hsl(240, 4%, 12%);
+      --border:   hsl(240, 4%, 16%);
+      --primary:  hsl(160, 84%, 39%);
+      --pfg:      hsl(240, 6%, 4%);
+      --fg:       hsl(0, 0%, 93%);
+      --fg-2:     hsl(0, 0%, 75%);
+      --fg-m:     hsl(0, 0%, 45%);
+      --r:        0.75rem;
+      --heading:  'Outfit', sans-serif;
+      --body:     'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow-x: hidden; }
+
+    /* ── Container ── */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s, backdrop-filter .3s;
+    }
+    nav.scrolled { background: hsla(240,6%,4%,.92); backdrop-filter: blur(20px); border-color: var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+    .nav-logo { font-family: var(--heading); font-size: .9rem; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: .02em; }
+    .nav-logo em { color: var(--fg-m); font-style: normal; }
+    .nav-links { display: flex; gap: 2.25rem; list-style: none; }
+    .nav-links a { font-size: .7rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-m); text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-toggle { display: none; background: none; border: none; color: var(--fg-m); cursor: pointer; padding: .25rem; }
+    .nav-mobile { display: none; flex-direction: column; gap: 1rem; padding: 1rem 1.5rem 1.25rem; background: hsla(240,6%,4%,.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-size: .9rem; color: var(--fg-m); text-decoration: none; transition: color .2s; }
+    .nav-mobile a:hover { color: var(--primary); }
+
+    /* ── HERO ── */
+    #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+    .glow1 { position:absolute; top:-200px; right:-200px; width:700px; height:700px; background:hsl(160 84% 39%/.06); border-radius:50%; filter:blur(90px); pointer-events:none; }
+    .glow2 { position:absolute; bottom:-100px; left:-100px; width:450px; height:450px; background:hsl(160 84% 39%/.03); border-radius:50%; filter:blur(80px); pointer-events:none; }
+    .hero-inner { padding: 7rem 0 5rem; width: 100%; }
+    .hero-label { font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--primary); margin-bottom: 1.25rem; opacity:0; animation: fadeUp .6s .2s forwards; }
+    .hero-name { font-family: var(--heading); font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 800; letter-spacing: -.04em; line-height: .95; opacity:0; animation: fadeUp .6s .35s forwards; }
+    .hero-name .g { color: var(--primary); }
+    .hero-sub { margin-top: 1.25rem; font-size: clamp(.85rem, 1.5vw, 1rem); color: var(--fg-m); letter-spacing: .05em; opacity:0; animation: fadeUp .6s .5s forwards; }
+    .hero-desc { margin-top: 1.5rem; font-size: clamp(.95rem, 1.6vw, 1.05rem); color: var(--fg-2); line-height: 1.8; max-width: 560px; opacity:0; animation: fadeUp .6s .65s forwards; }
+    .hero-desc strong { color: var(--primary); font-weight: 600; }
+    .hero-btns { margin-top: 2.25rem; display: flex; gap: 1rem; flex-wrap: wrap; opacity:0; animation: fadeUp .6s .8s forwards; }
+
+    /* Botões */
+    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; font-family:var(--heading); font-size:.82rem; font-weight:600; letter-spacing:.04em; text-decoration:none; border-radius:var(--r); transition: all .25s; white-space:nowrap; }
+    .btn-green { background:var(--primary); color:var(--pfg); }
+    .btn-green:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 8px 28px hsl(160 84% 39%/.25); }
+    .btn-outline { border:1px solid var(--border); color:var(--fg-m); }
+    .btn-outline:hover { border-color:var(--primary); color:var(--primary); }
+    .btn-dl { border:1px solid hsl(160 84% 39%/.4); color:var(--primary); }
+    .btn-dl:hover { background:hsl(160 84% 39%/.08); border-color:var(--primary); transform:translateY(-2px); }
+
+    .hero-stats { margin-top: 5rem; display: flex; flex-wrap: wrap; gap: 3.5rem; opacity:0; animation: fadeUp .6s 1s forwards; }
+    .sn { font-family:var(--heading); font-size: 2.5rem; font-weight:800; color:var(--primary); line-height:1; }
+    .sl { font-size:.65rem; color:var(--fg-m); letter-spacing:.14em; text-transform:uppercase; margin-top:.3rem; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 0; }
+    .section-alt { background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .stag { font-size:.7rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--primary); margin-bottom:.75rem; }
+    .stitle { font-family:var(--heading); font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-.025em; line-height:1.1; margin-bottom:2rem; }
+    .stitle .g { color:var(--primary); }
+
+    /* ── CARDS GLASS ── */
+    .gc { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; transition:border-color .3s, box-shadow .3s; }
+    .gc:hover { border-color:hsl(160 84% 39%/.4); box-shadow:0 0 30px hsl(160 84% 39%/.06); }
+
+    /* ── SOBRE ── */
+    .sobre-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .sobre-text p { color:var(--fg-2); line-height:1.82; font-size:.975rem; margin-bottom:1rem; }
+    .sobre-text p:last-child { margin-bottom:0; }
+    .sobre-text strong { color:var(--primary); font-weight:600; }
+    .sobre-cards { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .scard { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; position:relative; overflow:hidden; transition:border-color .3s; }
+    .scard::before { content:''; position:absolute; top:0; left:0; width:.25rem; height:0; background:var(--primary); border-radius:.125rem; transition:height .4s; }
+    .scard:hover { border-color:hsl(160 84% 39%/.4); }
+    .scard:hover::before { height:100%; }
+    .cn { font-family:var(--heading); font-size:1.8rem; font-weight:800; color:var(--primary); }
+    .cl { font-size:.62rem; color:var(--fg-m); letter-spacing:.1em; text-transform:uppercase; margin-top:.4rem; }
+
+    /* ── STACK ── */
+    .stack-cats { display:flex; flex-direction:column; gap:2.5rem; }
+    .scat-label { font-size:.65rem; color:var(--fg-m); letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; padding-bottom:.5rem; border-bottom:1px solid var(--border); }
+    .pills { display:flex; flex-wrap:wrap; gap:.625rem; }
+    .pill { display:inline-flex; align-items:center; gap:.45rem; padding:.45rem 1rem; border-radius:9999px; font-size:.78rem; font-weight:500; background:var(--sec); color:var(--fg-2); border:1px solid var(--border); transition:border-color .2s, color .2s; }
+    .pill:hover { border-color:hsl(160 84% 39%/.5); color:var(--primary); }
+    .dot { width:.4rem; height:.4rem; border-radius:50%; background:var(--primary); flex-shrink:0; }
+
+    /* ── TIMELINE ── */
+    .timeline { padding-left:2rem; border-left:1px solid hsl(160 84% 39%/.3); }
+    .tl { position:relative; padding-bottom:2.5rem; }
+    .tl:last-child { padding-bottom:0; }
+    .tdot { position:absolute; left:calc(-2rem - 6px); top:.4rem; width:.75rem; height:.75rem; border-radius:50%; border:2px solid var(--primary); background:var(--bg); }
+    .tdot.cur::after { content:''; position:absolute; inset:2px; border-radius:50%; background:var(--primary); }
+    .tperiod { font-size:.68rem; font-weight:600; color:var(--primary); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.3rem; }
+    .trole { font-family:var(--heading); font-size:1.1rem; font-weight:700; }
+    .tco { font-size:.75rem; color:var(--fg-m); margin:.2rem 0 .7rem; }
+    .tdesc { font-size:.9rem; color:var(--fg-2); line-height:1.75; max-width:680px; }
+    .ttags { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.75rem; }
+    .ttag { font-size:.65rem; padding:.18rem .6rem; border-radius:.25rem; border:1px solid hsl(160 84% 39%/.3); color:hsl(160 84% 39%/.85); font-weight:500; }
+
+    /* ── PROJETOS ── */
+    .pgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1.25rem; }
+    .pcard { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; transition:border-color .3s, box-shadow .3s, opacity .5s, transform .5s; opacity:0; transform:translateY(16px); }
+    .pcard.vis { opacity:1; transform:translateY(0); }
+    .pcard:hover { border-color:hsl(160 84% 39%/.4); box-shadow:0 0 30px hsl(160 84% 39%/.06); }
+    .pnum { font-size:.68rem; color:var(--fg-m); font-weight:500; margin-bottom:.7rem; }
+    .ptitle { font-family:var(--heading); font-size:1.05rem; font-weight:700; margin-bottom:.5rem; }
+    .pdesc { font-size:.85rem; color:var(--fg-2); line-height:1.65; margin-bottom:1rem; flex:1; }
+    .pstack { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:1rem; }
+    .ptag { font-size:.68rem; padding:.15rem .5rem; background:var(--sec); color:var(--fg-m); border-radius:.25rem; }
+    .plink { display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:var(--primary); font-weight:500; text-decoration:none; transition:gap .2s; }
+    .plink:hover { gap:.65rem; }
+    .ppriv { display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:var(--fg-m); }
+
+    /* ── CONTATO ── */
+    .cinner { max-width:600px; margin:0 auto; text-align:center; }
+    .csub { color:var(--fg-2); line-height:1.75; margin-bottom:2.5rem; font-size:1rem; }
+    .clinks { display:flex; justify-content:center; flex-wrap:wrap; gap:.875rem; }
+    .clink { display:inline-flex; align-items:center; gap:.7rem; padding:.9rem 1.4rem; background:var(--card); border:1px solid var(--border); border-radius:var(--r); font-size:.8rem; color:var(--fg-m); text-decoration:none; transition:border-color .2s, color .2s; }
+    .clink:hover { border-color:hsl(160 84% 39%/.4); color:var(--primary); }
+
+    /* ── FOOTER ── */
+    footer { padding:2rem 0; border-top:1px solid var(--border); }
+    .foot-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer p { font-size:.7rem; color:var(--fg-m); letter-spacing:.05em; }
+    footer span { color:var(--primary); }
+
+    /* ── REVEAL ── */
+    .rv  { opacity:0; transform:translateY(20px);  transition:opacity .6s, transform .6s; }
+    .rvl { opacity:0; transform:translateX(-24px); transition:opacity .6s, transform .6s; }
+    .rvr { opacity:0; transform:translateX(24px);  transition:opacity .6s, transform .6s; }
+    .rv.vis, .rvl.vis, .rvr.vis { opacity:1; transform:none; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .sobre-grid { grid-template-columns:1fr; gap:2.5rem; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display:none; }
+      .nav-toggle { display:block; }
+      .hero-name { font-size: clamp(3rem, 14vw, 5rem); }
+      .hero-stats { gap:2rem; }
+      .sobre-cards { grid-template-columns:1fr 1fr; }
+      .pgrid { grid-template-columns:1fr; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; justify-content: center; }
+      footer .foot-inner { flex-direction:column; text-align:center; }
+      .section { padding: 4rem 0; }
+      .stitle { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="nav-logo">leonardo<em>.dev</em></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#experiencia">Experiência</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <button class="nav-toggle" id="navBtn" aria-label="Menu">
+      <svg id="ico1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      <svg id="ico2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile" id="navMob">
+    <a href="#sobre"       class="nml">Sobre</a>
+    <a href="#stack"       class="nml">Stack</a>
+    <a href="#experiencia" class="nml">Experiência</a>
+    <a href="#projetos"    class="nml">Projetos</a>
+    <a href="#contato"     class="nml">Contato</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="glow1"></div>
+  <div class="glow2"></div>
+  <div class="wrap hero-inner">
+    <p class="hero-label">Disponível para novas oportunidades</p>
+    <h1 class="hero-name">Leonardo<br><span class="g">Fracalossi.</span></h1>
+    <p class="hero-sub">Analista de Sistemas · Desenvolvedor · Infra &amp; Redes</p>
+    <p class="hero-desc">
+      15 anos resolvendo problemas reais de TI — do suporte avançado ao
+      desenvolvimento de sistemas completos. Da rede ao banco de dados,
+      do servidor ao código: <strong>eu entrego o que precisa ser entregue.</strong>
+    </p>
+    <div class="hero-btns">
+      <a href="#projetos" class="btn btn-green">
+        Ver projetos
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contato" class="btn btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Entre em contato
+      </a>
+      <a href="curriculo-leonardo-fracalossi.pdf" download="curriculo-leonardo-fracalossi.pdf" target="_blank" class="btn btn-dl">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Baixar currículo
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="sn">15+</div><div class="sl">Anos de área</div></div>
+      <div><div class="sn">10+</div><div class="sl">Sistemas entregues</div></div>
+      <div><div class="sn">360°</div><div class="sl">Visão técnica</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section section-alt">
+  <div class="wrap">
+    <p class="stag rv">Sobre mim</p>
+    <h2 class="stitle rv">O profissional<br>que resolve <span class="g">tudo.</span></h2>
+    <div class="sobre-grid">
+      <div class="sobre-text rvl">
+        <p>Formado em <strong>Análise e Desenvolvimento de Sistemas</strong> com especialização em <strong>Gestão de TI</strong> (UNIVC, 2011), atuo na área desde 2010 — passando por suporte, desenvolvimento, ensino e gestão de sistemas empresariais complexos.</p>
+        <p>Não sou especialista em uma única coisa: sou o profissional que <strong>entende o problema inteiro</strong> e sabe qual ferramenta usar — seja código, query SQL, configuração de firewall ou levantamento de requisitos.</p>
+        <p>Atualmente na <strong>Boroto Calçados</strong>: administro ERPs (Nérus Web e Saci), gerencio banco de dados e monitoro a infraestrutura de rede. Desenvolvo ferramentas internas usando <strong>Python e IA</strong> — uma evolução natural do Makerall que usava antes.</p>
+      </div>
+      <div class="sobre-cards rvr">
+        <div class="scard"><div class="cn">15+</div><div class="cl">Anos de experiência</div></div>
+        <div class="scard"><div class="cn">ADS</div><div class="cl">Graduação + Especialização</div></div>
+        <div class="scard"><div class="cn">ERP</div><div class="cl">Adm. de sistemas complexos</div></div>
+        <div class="scard"><div class="cn">Open</div><div class="cl">Para novas oportunidades</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="section">
+  <div class="wrap">
+    <p class="stag rv">Stack técnica</p>
+    <h2 class="stitle rv">O que eu <span class="g">domino.</span></h2>
+    <div class="stack-cats">
+      <div class="rv">
+        <div class="scat-label">Desenvolvimento</div>
+        <div class="pills">
+          <span class="pill"><span class="dot"></span>PHP</span>
+          <span class="pill"><span class="dot"></span>JavaScript</span>
+          <span class="pill"><span class="dot"></span>TypeScript</span>
+          <span class="pill"><span class="dot"></span>React</span>
+          <span class="pill"><span class="dot"></span>HTML &amp; CSS</span>
+          <span class="pill"><span class="dot"></span>Python</span>
+          <span class="pill"><span class="dot"></span>Flask</span>
+          <span class="pill"><span class="dot"></span>IA / LLMs</span>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="scat-label">Banco de Dados &amp; Sistemas</div>
+        <div class="pills">
+          <span class="pill"><span class="dot"></span>MySQL</span>
+          <span class="pill"><span class="dot"></span>DBeaver</span>
+          <span class="pill"><span class="dot"></span>Nérus Web (ERP)</span>
+          <span class="pill"><span class="dot"></span>Saci (ERP)</span>
+          <span class="pill"><span class="dot"></span>REST APIs</span>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="scat-label">Infraestrutura &amp; Redes</div>
+        <div class="pills">
+          <span class="pill"><span class="dot"></span>Windows Server</span>
+          <span class="pill"><span class="dot"></span>Linux</span>
+          <span class="pill"><span class="dot"></span>Firewall</span>
+          <span class="pill"><span class="dot"></span>Redes TCP/IP</span>
+          <span class="pill"><span class="dot"></span>Suporte N2/N3</span>
+          <span class="pill"><span class="dot"></span>Git &amp; GitHub</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia" class="section section-alt">
+  <div class="wrap">
+    <p class="stag rv">Trajetória</p>
+    <h2 class="stitle rv">Experiência <span class="g">real.</span></h2>
+    <div class="timeline">
+
+      <div class="tl rv">
+        <div class="tdot cur"></div>
+        <div class="tperiod">2022 — Atual</div>
+        <div class="trole">Técnico de TI</div>
+        <div class="tco">Boroto Calçados · CLT · Integral</div>
+        <p class="tdesc">Cargo de Técnico, atuação de Analista. Suporte técnico avançado, administração dos ERPs Nérus Web e Saci, gerenciamento do MySQL via DBeaver e monitoramento/configuração do firewall corporativo. Desenvolvimento de ferramentas internas — antes com Makerall, atualmente potencializadas com <strong style="color:var(--primary)">Python e IA (Claude API)</strong>. Referência técnica da equipe.</p>
+        <div class="ttags"><span class="ttag">Python</span><span class="ttag">IA / LLMs</span><span class="ttag">MySQL</span><span class="ttag">Nérus Web</span><span class="ttag">Saci ERP</span><span class="ttag">Firewall</span><span class="ttag">DBeaver</span></div>
+      </div>
+
+      <div class="tl rv">
+        <div class="tdot"></div>
+        <div class="tperiod">2017 — 2021</div>
+        <div class="trole">Desenvolvedor de Software (Freelancer)</div>
+        <div class="tco">Autônomo · Dedicação exclusiva</div>
+        <p class="tdesc">Desenvolvimento de sistemas sob demanda. Atuação completa: levantamento de requisitos, desenvolvimento, implantação e suporte pós-entrega.</p>
+        <div class="ttags"><span class="ttag">Makerall</span><span class="ttag">MySQL</span><span class="ttag">Levantamento de Requisitos</span></div>
+      </div>
+
+      <div class="tl rv">
+        <div class="tdot"></div>
+        <div class="tperiod">2016 — 2017</div>
+        <div class="trole">Analista de Suporte Técnico</div>
+        <div class="tco">Escola Técnica Samatec · CLT</div>
+        <p class="tdesc">Suporte técnico avançado, manutenção de infraestrutura e suporte a sistemas internos.</p>
+        <div class="ttags"><span class="ttag">Suporte N2</span><span class="ttag">Infraestrutura</span><span class="ttag">Redes</span></div>
+      </div>
+
+      <div class="tl rv">
+        <div class="tdot"></div>
+        <div class="tperiod">2014</div>
+        <div class="trole">Professor de Informática</div>
+        <div class="tco">Centro Universitário Vale do Cricaré — UNIVC</div>
+        <p class="tdesc">Docência em informática. Reforçou a capacidade de comunicar conceitos técnicos de forma clara e didática.</p>
+        <div class="ttags"><span class="ttag">Docência</span><span class="ttag">TI</span></div>
+      </div>
+
+      <div class="tl rv">
+        <div class="tdot"></div>
+        <div class="tperiod">2011 — 2015</div>
+        <div class="trole">Analista, Desenvolvedor &amp; Suporte Técnico</div>
+        <div class="tco">Efetiva Serviços e Tecnologia</div>
+        <p class="tdesc">Desenvolvimento de sistemas empresariais completos com Makerall e MySQL: E-Comercial, E-Mentor, E-Clínica e mais 6 sistemas. Também atuei na configuração de servidores, identificação de bugs e implantação em campo.</p>
+        <div class="ttags"><span class="ttag">Makerall</span><span class="ttag">MySQL 5.5</span><span class="ttag">Diagramas UML</span><span class="ttag">Relatórios</span><span class="ttag">Implantação</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos" class="section">
+  <div class="wrap">
+    <p class="stag rv">Portfólio</p>
+    <h2 class="stitle rv">Sistemas que <span class="g">construí.</span></h2>
+    <div class="pgrid">
+
+      <div class="pcard">
+        <div class="pnum">01 — ERP Interno</div>
+        <h3 class="ptitle">Boroto Ferramentas</h3>
+        <p class="pdesc">Sistema web interno para a Boroto Calçados. Operações diretas no ERP Nérus: liberar rótulos, alterar rating de clientes, editar nomes de produtos e gerenciar grades. Auditoria completa, dual-database (prod/homolog), grupos dinâmicos de permissão e log com SQL exato de cada operação.</p>
+        <div class="pstack"><span class="ptag">Python</span><span class="ptag">Flask</span><span class="ptag">MySQL</span><span class="ptag">Jinja2</span><span class="ptag">bcrypt</span><span class="ptag">Fernet</span></div>
+        <span class="ppriv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Uso interno · Privado</span>
+      </div>
+
+      <div class="pcard">
+        <div class="pnum">02 — Monitor / Alerta</div>
+        <h3 class="ptitle">osMonitor</h3>
+        <p class="pdesc">Monitoramento em tempo real do osTicket. Detecta novos chamados no MySQL e notifica com voz sintetizada (gTTS + ffmpeg + ALSA). Interface PyQt6 dark mode, log em tabela e bandeja do sistema. Dois serviços systemd independentes.</p>
+        <div class="pstack"><span class="ptag">Python</span><span class="ptag">PyQt6</span><span class="ptag">MySQL</span><span class="ptag">gTTS</span><span class="ptag">systemd</span><span class="ptag">ALSA / Linux</span></div>
+        <a href="https://github.com/leonardofracalossi" target="_blank" class="plink">Ver no GitHub <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="pcard">
+        <div class="pnum">03 — Desktop / IA</div>
+        <h3 class="ptitle">Boroto Resizer</h3>
+        <p class="pdesc">Ferramenta desktop para tratamento em lote de imagens de produto. Remove fundo via IA (rembg/U2Net), replica sombra real, 6 modos de redimensionamento e exporta em JPG/PNG/WebP/TIFF. Dark mode com preview e detecção automática de orientação por bbox.</p>
+        <div class="pstack"><span class="ptag">Python</span><span class="ptag">Tkinter</span><span class="ptag">rembg (U2Net)</span><span class="ptag">Pillow</span><span class="ptag">PyInstaller</span><span class="ptag">IA / ONNX</span></div>
+        <a href="https://github.com/leonardofracalossi" target="_blank" class="plink">Ver no GitHub <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="pcard">
+        <div class="pnum">04 — ERP</div>
+        <h3 class="ptitle">E-Comercial</h3>
+        <p class="pdesc">Sistema de controle empresarial completo com gerenciamento de pessoas, documentos, financeiro, contábil e relatórios de cada área. Um dos maiores sistemas desenvolvidos na Efetiva Serviços e Tecnologia.</p>
+        <div class="pstack"><span class="ptag">Makerall</span><span class="ptag">MySQL</span><span class="ptag">Relatórios</span></div>
+        <span class="ppriv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Sistema proprietário</span>
+      </div>
+
+      <div class="pcard">
+        <div class="pnum">05 — Acadêmico</div>
+        <h3 class="ptitle">E-Mentor</h3>
+        <p class="pdesc">Sistema acadêmico completo com controle de pessoas, financeiro, notas, faltas, aulas e geração de documentos como boletins, mapas de notas e atas. Implantado em instituições de ensino.</p>
+        <div class="pstack"><span class="ptag">Makerall</span><span class="ptag">MySQL</span><span class="ptag">Acadêmico</span></div>
+        <span class="ppriv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Sistema proprietário</span>
+      </div>
+
+      <div class="pcard">
+        <div class="pnum">06 — Suite Saúde &amp; Outros</div>
+        <h3 class="ptitle">E-Clínica + 6 sistemas</h3>
+        <p class="pdesc">Família de sistemas para clínicas (geral, psiquiátrica, veterinária), além de Abastec, LojaVeículos, Chamados de Suporte, SGFI-Web e Teste Vocacional — cada um com banco, regras de negócio e relatórios próprios.</p>
+        <div class="pstack"><span class="ptag">Makerall</span><span class="ptag">MySQL</span><span class="ptag">Diversas verticais</span></div>
+        <span class="ppriv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Sistemas proprietários</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="section section-alt">
+  <div class="wrap">
+    <div class="cinner">
+      <p class="stag rv">Contato</p>
+      <h2 class="stitle rv">Vamos <span class="g">conversar?</span></h2>
+      <p class="csub rv">Aberto a propostas, freelas ou uma boa conversa técnica.<br>Me manda uma mensagem — respondo rápido.</p>
+      <div class="clinks rv">
+        <a href="mailto:falcaolk@gmail.com" class="clink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          falcaolk@gmail.com
+        </a>
+        <a href="https://github.com/leonardofracalossi" target="_blank" class="clink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="tel:+5527998054077" class="clink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          (27) 99805-4077
+        </a>
+        <a href="curriculo-leonardo-fracalossi.pdf" download="curriculo-leonardo-fracalossi.pdf" target="_blank" class="clink" style="border-color:hsl(160 84% 39%/.3); color:var(--primary)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar currículo PDF
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-inner">
+    <p>© 2025 <span>Leonardo Fracalossi</span> — São Mateus, ES</p>
+    <p>Feito com <span>&#9632;</span> e muita consulta SQL.</p>
+  </div>
+</footer>
+
+<script>
+  /* Navbar scroll */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  /* Mobile menu */
+  const btn = document.getElementById('navBtn');
+  const mob = document.getElementById('navMob');
+  const i1  = document.getElementById('ico1');
+  const i2  = document.getElementById('ico2');
+  btn.addEventListener('click', () => {
+    const open = mob.classList.toggle('open');
+    i1.style.display = open ? 'none' : 'block';
+    i2.style.display = open ? 'block' : 'none';
+  });
+  document.querySelectorAll('.nml').forEach(a => {
+    a.addEventListener('click', () => {
+      mob.classList.remove('open');
+      i1.style.display = 'block';
+      i2.style.display = 'none';
+    });
+  });
+
+  /* Reveal on scroll */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.rv, .rvl, .rvr').forEach((el, i) => {
+    el.style.transitionDelay = (i % 5) * 0.07 + 's';
+    obs.observe(el);
+  });
+
+  document.querySelectorAll('.pcard').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 0.09 + 's';
+    obs.observe(el);
+  });
+
+  document.querySelectorAll('.tl').forEach((el, i) => {
+    el.style.transitionDelay = i * 0.07 + 's';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
